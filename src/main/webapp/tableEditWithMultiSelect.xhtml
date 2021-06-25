@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:head>
+</h:head>
+
+<h:body style="margin-left:50px">
+    <h:form id="form">
+        <p:growl id="msgs" showDetail="true"/>
+        <div class="card">
+            <h5>Checkbox</h5>
+            <p:dataTable id="checkboxDT" var="person"
+                         value="#{personManagedBean.people}"
+                         selection="#{personManagedBean.selectedPeople}"
+                         rowKey="#{person.id}"
+                         style="margin-bottom:0"
+                         paginator="true"
+                         rows="5"
+                         selectionPageOnly="false"
+                         editMode="cell"
+                         editable="true">
+
+                <p:ajax event="cellEdit" listener="#{personManagedBean.onCellEdit}" update=":form:msgs"/>
+
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                <p:column headerText="id">
+                    <h:outputText value="#{person.id}" />
+                </p:column>
+
+<!--                <p:column headerText="firstName">-->
+<!--                    <h:outputText value="#{person.firstName}" />-->
+<!--                </p:column>-->
+                <p:column headerText="firstName">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{person.firstName}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText id="modelInput2" value="#{person.firstName}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="lastName">
+                    <h:outputText value="#{person.lastName}" />
+                </p:column>
+
+                <p:column headerText="nationalCode">
+                    <h:outputText value="#{person.nationalCode}" />
+                </p:column>
+            </p:dataTable>
+        </div>
+
+        <p:commandButton action="#{personManagedBean.showSelectedPeople}"/>
+    </h:form>
+</h:body>
+</html>

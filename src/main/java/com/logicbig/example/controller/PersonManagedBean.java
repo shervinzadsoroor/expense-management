@@ -3,6 +3,7 @@ package com.logicbig.example.controller;
 import com.logicbig.example.model.Person;
 import com.logicbig.example.service.PersonService;
 import lombok.Getter;
+import lombok.Setter;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -22,6 +24,12 @@ public class PersonManagedBean {
     @Getter
     private List<Person> people;
 
+    @Getter @Setter
+    private List<Person> selectedPeople;
+
+    @Getter
+    private List<Person> selectionOfPeople;
+
     private final PersonService personService;
 
     public PersonManagedBean(PersonService personService) {
@@ -31,6 +39,12 @@ public class PersonManagedBean {
     @PostConstruct
     public void init() {
         this.people = personService.getAllPeople();
+        selectionOfPeople = new ArrayList<>();
+    }
+
+    public void showSelectedPeople() {
+        selectionOfPeople.addAll(selectedPeople);
+        System.out.println("selectedPeople = " + selectionOfPeople);
     }
 
     public void onEditInit(RowEditEvent event) {
