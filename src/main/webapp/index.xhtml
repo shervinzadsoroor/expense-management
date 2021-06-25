@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:p="http://primefaces.org/ui"
-	  xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 </h:head>
 
 <h:body style="margin-left:50px">
-	<h2>PrimeFaces Linear Chart Example</h2>
-	<p:chart type="line" model="#{lineChartBean.lineModel}" style="height:400px;width:600px"/>
+    <h2>PrimeFaces Linear Chart Example</h2>
+    <p:chart type="line" model="#{lineChartBean.lineModel}" style="height:400px;width:600px"/>
 
-	<h:outputLabel dir="RTL" value="لیست پرسنل"/>
-	<p:dataTable dir="rtl" value="#{personManagedBean.people}" var="person">
-		<p:column headerText="person id">
-			<h:outputText id="person_id" value="#{person.id}"/>
-		</p:column>
-		<p:column headerText="first name">
-			<h:outputText id="firstName" value="#{person.firstName}"/>
-		</p:column>
-		<p:column headerText="last name">
-			<h:outputText id="lastName" value="#{person.lastName}"/>
-		</p:column>
-		<p:column headerText="personal code">
-			<h:outputText id="personalCode" value="#{person.personalCode}"/>
-		</p:column>
-	</p:dataTable>
+    <h:outputLabel value="لیست پرسنل"/>
+    <p:dataTable dir="rtl" value="#{personManagedBean.people}" var="person">
+        <p:column headerText="person id">
+            <h:outputText rendered="#{person.isNationalCodeValid}" id="person_id" value="#{person.id}"/>
+        </p:column>
+        <p:column headerText="first name">
+            <h:outputText rendered="#{person.isNationalCodeValid}" id="firstName" value="#{person.firstName}"/>
+        </p:column>
+        <p:column headerText="last name">
+            <h:outputText rendered="#{person.isNationalCodeValid}" id="lastName" value="#{person.lastName}"/>
+        </p:column>
+        <p:column headerText="personal code">
+            <h:outputText rendered="#{person.isNationalCodeValid}" id="personalCode" value="#{person.personalCode}"/>
+        </p:column>
+        <p:column headerText="national code">
+            <h:outputText rendered="#{person.isNationalCodeValid}" id="natoinalCode" value="#{person.nationalCode}"/>
+        </p:column>
+    </p:dataTable>
+
+    <p:commandButton onclick="PF('Attr').show()" value="show"/>
+    <p:commandButton onclick="PF('Attr').hide()" value="hide"/>
+    <p:outputPanel>
+        <p:dialog
+                widgetVar="Attr"
+                resizable="false"
+                draggable="false"
+                width="500px"
+                height="300px"/>
+    </p:outputPanel>
+
+    <ui:insert name="body" />
 </h:body>
 </html>

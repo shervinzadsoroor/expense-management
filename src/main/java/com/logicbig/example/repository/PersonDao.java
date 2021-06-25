@@ -14,11 +14,11 @@ public class PersonDao {
     public List<Person> getPeople() {
         return new ArrayList<>(
                 Arrays.asList(
-                        new Person(1L, "ali", "raad", "345235")
-                        , new Person(2L, "sara", "saiedi", "234234")
-                        , new Person(3L, "shervin", "bidari", "333333")
-                        , new Person(4L, "rahim", "shams", "555555")
-                        , new Person(5L, "arash", "tavakoli", "1212100012")
+                        Person.builder().id(1L).firstName("ali").lastName("raad").personalCode("23423424").nationalCode("5463636456").build()
+                        , Person.builder().id(2L).firstName("sara").lastName("saiedi").personalCode("234234").nationalCode("45454").build()
+                        , Person.builder().id(3L).firstName("shervin").lastName("bidari").personalCode("333333").nationalCode("0010064001").build()
+                        , Person.builder().id(4L).firstName("rahim").lastName("shams").personalCode("555555").nationalCode("43").build()
+                        , Person.builder().id(5L).firstName("arash").lastName("tavakoli").personalCode("1212100012").nationalCode("545").build()
                 ));
     }
 }

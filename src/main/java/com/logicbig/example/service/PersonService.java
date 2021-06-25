@@ -16,6 +16,13 @@ public class PersonService {
     }
 
     public List<Person> getAllPeople() {
-        return this.personDao.getPeople();
+        List<Person> people = this.personDao.getPeople();
+        people.forEach(person -> {
+            if (person.getNationalCode().length() == 10)
+                person.setIsNationalCodeValid(true);
+            else
+                person.setIsNationalCodeValid(false);
+        });
+        return people;
     }
 }
