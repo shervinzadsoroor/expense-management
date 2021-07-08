@@ -133,4 +133,8 @@ public class PersonManagedBean {
         facesContext.responseComplete();
 
     }
+
+    public String[] getOptions() {
+        return new String[]{"Option 1", "Option 2", "Option 3"};
+    }
 }
