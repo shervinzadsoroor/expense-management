@@ -61,5 +61,10 @@
 
         <p:commandButton action="#{personManagedBean.showSelectedPeople}"/>
     </h:form>
+
+    <h:form>
+        <p:commandButton ajax="false" action="#{personManagedBean.downloadExcelOnFly()}" value="download excel on the fly"/>
+        <p:commandButton ajax="false" action="#{personManagedBean.downloadExcel()}" value="download excel"/>
+    </h:form>
 </h:body>
 </html>
