@@ -17,45 +17,90 @@
         <p:growl id="msgs" showDetail="true"/>
         <div class="card">
             <h5>Checkbox</h5>
-            <p:dataTable id="checkboxDT" var="person"
-                         value="#{personManagedBean.people}"
-                         selection="#{personManagedBean.selectedPeople}"
+            <p:dataTable id="checkboxDT"
+                         var="person"
+                         value="#{personManagedBean.personLazyDataModel.wrappedData}"
                          rowKey="#{person.id}"
                          style="margin-bottom:0"
-                         paginator="true"
-                         rows="5"
-                         selectionPageOnly="false"
-                         editMode="cell"
-                         editable="true">
+                         paginator="true" rows="10"
+                         paginatorTemplate=
+                                 "{RowsPerPageDropdown} {FirstPageLink}
+                     {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15" lazy="true"
+            editable="true"
+            editMode="cell">
 
                 <p:ajax event="cellEdit" listener="#{personManagedBean.onCellEdit}" update=":form:msgs"/>
 
-                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+<!--                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>-->
                 <p:column headerText="id">
-                    <h:outputText value="#{person.id}" />
+                    <h:outputText value="#{person.id}"/>
                 </p:column>
 
-<!--                <p:column headerText="firstName">-->
-<!--                    <h:outputText value="#{person.firstName}" />-->
-<!--                </p:column>-->
+                <!--                <p:column headerText="firstName">-->
+                <!--                    <h:outputText value="#{person.firstName}" />-->
+                <!--                </p:column>-->
                 <p:column headerText="firstName">
+<!--                    <p:cellEditor>-->
+<!--                        <f:facet name="output">-->
+                            <h:outputText value="#{person.firstName}"/>
+<!--                        </f:facet>-->
+<!--                        <f:facet name="input">-->
+<!--                            <p:inputText id="modelInput2" value="#{person.firstName}" style="width:100%"/>-->
+<!--                        </f:facet>-->
+<!--                    </p:cellEditor>-->
+                </p:column>
+
+                <p:column headerText="lastName">
+                    <h:outputText value="#{person.lastName}"/>
+                </p:column>
+
+                <p:column headerText="nationalCode">
                     <p:cellEditor>
                         <f:facet name="output">
-                            <h:outputText value="#{person.firstName}"/>
+                            <h:outputText value="#{person.nationalCode}"/>
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputText id="modelInput2" value="#{person.firstName}" style="width:100%"/>
+                            <h:inputText
+                                    id="modelInput2"
+                                    value="#{person.nationalCode}"
+                                    style="width:100%">
+                            </h:inputText>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
 
-                <p:column headerText="lastName">
-                    <h:outputText value="#{person.lastName}" />
+                <p:column headerText="from">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{person.from}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText
+                                    id="fromInput"
+                                    value="#{person.from}"
+                                    validator="#{personManagedBean.fromValidator}"
+                                    accesskey="#{person.id}"
+                                    style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
 
-                <p:column headerText="nationalCode">
-                    <h:outputText value="#{person.nationalCode}" />
+                <p:column headerText="to">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{person.to}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText
+                                    id="toInput"
+                                    value="#{person.to}"
+                                    validator="#{personManagedBean.toValidator}"
+                                    style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
+
             </p:dataTable>
         </div>
 
@@ -63,7 +108,8 @@
     </h:form>
 
     <h:form>
-        <p:commandButton ajax="false" action="#{personManagedBean.downloadExcelOnFly()}" value="download excel on the fly"/>
+        <p:commandButton ajax="false" action="#{personManagedBean.downloadExcelOnFly()}"
+                         value="download excel on the fly"/>
         <p:commandButton ajax="false" action="#{personManagedBean.downloadExcel()}" value="download excel"/>
     </h:form>
 
@@ -75,5 +121,7 @@
             <f:selectItem itemLabel="Option 3" itemValue="Option 3"/>
         </p:selectManyCheckbox>
     </h:form>
+
+
 </h:body>
 </html>

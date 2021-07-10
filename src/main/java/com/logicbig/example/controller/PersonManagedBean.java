@@ -1,6 +1,8 @@
 package com.logicbig.example.controller;
 
 import com.logicbig.example.model.Person;
+import com.logicbig.example.repository.IPersonDao;
+import com.logicbig.example.service.PersonLazyDataModel;
 import com.logicbig.example.service.PersonService;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,13 +13,18 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.LazyDataModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -26,13 +33,21 @@ import java.util.List;
 
 @Component
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class PersonManagedBean {
+
+    @Autowired
+    private IPersonDao iPersonDao;
+
+    @Getter
+    @Setter
+    private PersonLazyDataModel personLazyDataModel = new PersonLazyDataModel(iPersonDao);
 
     @Getter
     private List<Person> people;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private List<Person> selectedPeople;
 
     @Getter
@@ -48,6 +63,11 @@ public class PersonManagedBean {
     public void init() {
         this.people = personService.getAllPeople();
         selectionOfPeople = new ArrayList<>();
+        personLazyDataModel = new PersonLazyDataModel(iPersonDao);
+    }
+
+    public void showLazyData() {
+//        personLazyDataModel.load()
     }
 
     public void showSelectedPeople() {
@@ -78,6 +98,40 @@ public class PersonManagedBean {
         if (newValue != null && !newValue.equals(oldValue)) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
             FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
+
+    public void validateNationalCode(FacesContext context, UIComponent comp, Object value) {
+        System.out.println("inside validate method");
+        String mno = (String) value;
+        if (mno.length() < 4) {
+            ((UIInput) comp).setValid(false);
+            FacesMessage message = new FacesMessage(
+                    "Minimum length of model number is 4");
+            context.addMessage(comp.getClientId(context), message);
+        }
+    }
+
+    public void fromValidator(FacesContext context, UIComponent comp, Object value) {
+        Long from = (Long) value;
+        UIInput uiInput = (UIInput) comp;
+        Long accessKey = (Long) uiInput.getAttributes().get("accesskey");
+        if (from < 1) {
+            uiInput.setValid(false);
+            FacesMessage message = new FacesMessage(
+                    "مقدار 'از' نمیتواند کمتر از صفر باشد");
+            context.addMessage(comp.getClientId(context), message);
+        }
+    }
+
+    public void toValidator(FacesContext context, UIComponent comp, Object value) {
+        System.out.println("inside validate method");
+        String mno = (String) value;
+        if (mno.length() < 4) {
+            ((UIInput) comp).setValid(false);
+            FacesMessage message = new FacesMessage(
+                    "Minimum length of model number is 4");
+            context.addMessage(comp.getClientId(context), message);
         }
     }
 

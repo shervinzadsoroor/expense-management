@@ -14,4 +14,18 @@ public class Person {
     private String personalCode;
     private String nationalCode;
     private Boolean isNationalCodeValid;
+    private Long from;
+    private Long to;
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", personalCode='" + personalCode + '\'' +
+                ", nationalCode='" + nationalCode + '\'' +
+                ", isNationalCodeValid=" + isNationalCodeValid +
+                "}\n";
+    }
 }
