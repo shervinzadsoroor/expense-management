@@ -8,61 +8,11 @@
 
 <h:head>
 </h:head>
-
 <h:body style="margin-left:50px">
-    <h2>PrimeFaces Linear Chart Example</h2>
-    <p:chart type="line" model="#{lineChartBean.lineModel}" style="height:400px;width:600px"/>
+    <ui:composition template="master.xhtml">
+        <ui:define name="master-frame">
 
-    <h:outputLabel value="لیست پرسنل"/>
-
-    <h:form>
-        <p:dataTable
-                id="peopleTable"
-                dir="rtl"
-                value="#{personManagedBean.people}"
-                var="person"
-                editable="true"
-                editMode="cell"
-                widgetVar="cellPeople">
-            <p:column headerText="person id">
-                <h:outputText id="person_id" value="#{person.id}"/>
-            </p:column>
-            <p:column headerText="first name">
-                <p:cellEditor>
-                    <h:outputText id="firstName" value="#{person.firstName}"/>
-                    <p:inputText id="editFirstName" value="#{person.firstName}" style="width:100%"/>
-                </p:cellEditor>
-            </p:column>
-            <p:column headerText="last name">
-                <h:outputText id="lastName" value="#{person.lastName}"/>
-            </p:column>
-            <p:column headerText="personal code">
-                <h:outputText id="personalCode" value="#{person.personalCode}"/>
-            </p:column>
-            <p:column headerText="national code">
-                <h:outputText id="natoinalCode" value="#{person.nationalCode}"/>
-            </p:column>
-        </p:dataTable>
-
-        <p:contextMenu for="products2" widgetVar="cMenu">
-            <p:menuitem value="Edit Cell" icon="pi pi-search"
-                        onclick="PF('cellPeople').showCellEditor();return false;"/>
-            <p:menuitem value="Hide Menu" icon="pi pi-times" onclick="PF('cMenu').hide()"/>
-        </p:contextMenu>
-    </h:form>
-
-
-    <p:commandButton onclick="PF('Attr').show()" value="show"/>
-    <p:commandButton onclick="PF('Attr').hide()" value="hide"/>
-    <p:outputPanel>
-        <p:dialog
-                widgetVar="Attr"
-                resizable="false"
-                draggable="false"
-                width="500px"
-                height="300px"/>
-    </p:outputPanel>
-
-    <ui:insert name="body"/>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

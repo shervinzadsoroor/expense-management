@@ -1,2 +1,20 @@
 server:
-  port: 8000
+  port: 8080
+
+spring:
+  datasource:
+    username: root
+    password: chevroletnovaV8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/expense_management
+    platform: mysql
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: false
+        format_sql: false
