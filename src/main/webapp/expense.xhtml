@@ -3,12 +3,18 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://www.springframework.org/tags/form">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{expenseManagedBean.init}"/>
+    </f:metadata>
 </h:head>
+
 <h:body style="margin-left:50px">
+
     <ui:composition template="master.xhtml">
         <ui:define name="master-frame">
             <div style="display: flex; justify-content: center; padding: 30px 0 0 20px;">
@@ -22,13 +28,19 @@
                                 <h:outputLabel value="مبلغ"/>
                                 <p:inputNumber
                                         id="amount"
+                                        placeholder="مبلغ را وارد کنید"
                                         value="#{expenseManagedBean.expenseDTO.amount}"
                                         label="مبلغ"/>
                                 <h:outputLabel value="توضیحات"/>
                                 <p:inputText
                                         id="description"
+                                        placeholder="توضیحات"
                                         value="#{expenseManagedBean.expenseDTO.description}"
                                         label="توضیحات"/>
+
+                                <p:commandButton
+                                    action="#{expenseManagedBean.save}"
+                                value="ذخیره"/>
                             </h:form>
                         </p:outputPanel>
                     </div>

@@ -1,6 +1,6 @@
 package com.expenseAndDebt.management.model.dto;
 
-import com.expenseAndDebt.core.BaseDTO;
+import com.expenseAndDebt.core.model.BaseDTO;
 import lombok.Getter;
 import lombok.Setter;
 
