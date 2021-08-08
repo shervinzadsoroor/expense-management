@@ -17,8 +17,8 @@ public class Expense extends BaseEntity<Expense, ExpenseDTO> {
     @Column(name = "AMOUNT")
     private Long amount;
 
-    @Column(name = "TYPE")
-    private Long typeBiValue;
+    @Column(name = "BI_TYPE")
+    private Long biType;
 
     @Column(name = "IS_PAID")
     private Boolean isPaid;
@@ -26,15 +26,17 @@ public class Expense extends BaseEntity<Expense, ExpenseDTO> {
     @Column(name = "DATE_FOR_PAY")
     private Date dateForPay;
 
+    public Expense() {
+        super();
+    }
+
     @Override
     public void getDomainObject(ExpenseDTO dto) {
         this.id = dto.getId();
-        this.createdDate = new Date();
-        this.isDeleted = dto.getIsDeleted();
-        this.isEnabled = dto.getIsEnabled();
+        this.version = dto.getVersion();
         this.description = dto.getDescription();
         this.amount = dto.getAmount();
-        this.typeBiValue = dto.getTypeBiValue();
+        this.biType = dto.getBiType();
         this.isPaid = dto.getIsPaid();
         this.dateForPay = dto.getDateForPay();
     }
@@ -42,14 +44,16 @@ public class Expense extends BaseEntity<Expense, ExpenseDTO> {
     @Override
     public ExpenseDTO getDtoObject() {
         ExpenseDTO dto = new ExpenseDTO();
-        dto.setCreatedDate(this.getCreatedDate());
-        dto.setIsDeleted(this.getIsDeleted());
-        dto.setIsEnabled(this.getIsEnabled());
-        dto.setDescription(this.getDescription());
+        dto.setId(this.id);
+        dto.setVersion(this.version);
+        dto.setCreatedDate(this.createdDate);
+        dto.setIsDeleted(this.isDeleted);
+        dto.setIsEnabled(this.isEnabled);
+        dto.setDescription(this.description);
         dto.setAmount(this.getAmount());
-        dto.setTypeBiValue(this.getTypeBiValue());
-        dto.setIsPaid(this.getIsPaid());
-        dto.setDateForPay(this.getDateForPay());
+        dto.setBiType(this.biType);
+        dto.setIsPaid(this.isPaid);
+        dto.setDateForPay(this.dateForPay);
         return dto;
     }
 }

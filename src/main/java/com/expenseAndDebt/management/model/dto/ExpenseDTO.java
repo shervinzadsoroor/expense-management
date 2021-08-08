@@ -11,12 +11,13 @@ import java.util.Date;
 public class ExpenseDTO extends BaseDTO {
 
     private Long id;
+    private Long version;
     private Date createdDate;
     private Boolean isDeleted;
     private Boolean isEnabled;
     private String description;
     private Long amount;
-    private Long typeBiValue;
+    private Long biType;
     private Boolean isPaid;
     private Date dateForPay;
 }
