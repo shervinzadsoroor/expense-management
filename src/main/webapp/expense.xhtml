@@ -29,20 +29,33 @@
                                     <p:inputNumber
                                             id="amount"
                                             placeholder="مبلغ را وارد کنید"
+                                            validatorMessage="مبلغ را وارد کنید"
                                             value="#{expenseManagedBean.expenseDTO.amount}"
                                             padControl="false"
+                                            required="true"
                                             styleClass="ui-sm-4"/>
                                     <p:inputText
                                             id="description"
                                             placeholder="توضیحات"
+                                            validatorMessage="توضیحات را وارد کنید"
+                                            required="true"
                                             value="#{expenseManagedBean.expenseDTO.description}"
                                             styleClass="ui-sm-4"/>
-                                    <p:selectCheckboxMenu value="" />
-                                    <p:inputText
-                                            id="dateForPay"
-                                            placeholder="تاریخ پرداخت"
-                                            value="#{expenseManagedBean.expenseDTO.dateForPay}"
-                                            styleClass="ui-sm-4"/>
+                                    <p:selectOneMenu value="#{expenseManagedBean.expenseDTO.biType}"
+                                                     multiple="false"
+                                                     dir="rtl"
+                                                     validatorMessage="نوع هزینه را انتخاب کنید"
+                                                     label="نوع هزینه">
+                                        <f:selectItems value="#{expenseManagedBean.expenseTypesBiDtoList}"
+                                                       var="type"
+                                                       itemLabel="#{type.title}"
+                                                       itemValue="#{type.code}"/>
+                                    </p:selectOneMenu>
+
+                                    <p:calendar id="date"
+                                                placeholder="تاریخ پرداخت"
+                                                value="#{expenseManagedBean.expenseDTO.dateForPay}"
+                                                mode="popup"/>
                                 </div>
 
                                 <p:commandButton
