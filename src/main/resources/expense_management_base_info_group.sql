@@ -1,0 +1,1 @@
+INSERT INTO expense_management.base_info_group (id, created_date, description, is_deleted, is_enabled, version, code, english_title, title) VALUES (1, null, null, 0, 1, 1, 1, 'expense type', 'نوع هزینه');
