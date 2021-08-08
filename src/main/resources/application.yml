@@ -6,7 +6,7 @@ spring:
     username: root
     password: chevroletnovaV8
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/expense_management
+    url: jdbc:mysql://localhost:3306/expense_management?createDatabaseIfNotExist=true
     platform: mysql
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
