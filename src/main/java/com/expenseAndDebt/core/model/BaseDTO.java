@@ -9,6 +9,7 @@ import java.util.Date;
 @Getter
 public class BaseDTO {
     private Long id;
+    private Long version;
     private Date createdDate;
     private String createdDateSolarString;
     private Boolean isDeleted;
