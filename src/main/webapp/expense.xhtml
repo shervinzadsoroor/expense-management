@@ -25,24 +25,66 @@
                         <p:outputPanel id="form-container">
                             <h:form id="add-expense-form"
                                     title="افزودن هزینه">
-                                <h:outputLabel value="مبلغ"/>
-                                <p:inputNumber
-                                        id="amount"
-                                        placeholder="مبلغ را وارد کنید"
-                                        value="#{expenseManagedBean.expenseDTO.amount}"
-                                        label="مبلغ"/>
-                                <h:outputLabel value="توضیحات"/>
-                                <p:inputText
-                                        id="description"
-                                        placeholder="توضیحات"
-                                        value="#{expenseManagedBean.expenseDTO.description}"
-                                        label="توضیحات"/>
+                                <div style="display: flex; justify-content: space-around">
+                                    <p:inputNumber
+                                            id="amount"
+                                            placeholder="مبلغ را وارد کنید"
+                                            value="#{expenseManagedBean.expenseDTO.amount}"
+                                            padControl="false"
+                                            styleClass="ui-sm-4"/>
+                                    <p:inputText
+                                            id="description"
+                                            placeholder="توضیحات"
+                                            value="#{expenseManagedBean.expenseDTO.description}"
+                                            styleClass="ui-sm-4"/>
+                                    <p:selectCheckboxMenu value="" />
+                                    <p:inputText
+                                            id="dateForPay"
+                                            placeholder="تاریخ پرداخت"
+                                            value="#{expenseManagedBean.expenseDTO.dateForPay}"
+                                            styleClass="ui-sm-4"/>
+                                </div>
 
                                 <p:commandButton
-                                    action="#{expenseManagedBean.save}"
-                                value="ذخیره"/>
+                                        action="#{expenseManagedBean.save}"
+                                        update="msg, expenseDatatable"
+                                        value="ذخیره"/>
+
+                                <p:commandButton
+                                        update=" expenseDatatable"
+                                        value="update table"/>
                             </h:form>
+
+                            <p:dataTable dir="rtl"
+                                         emptyMessage="داده یافت نشد"
+                                         id="expenseDatatable"
+                                         value="#{expenseManagedBean.expenseLazyDataModel}"
+                                         var="expense"
+                                         rows="5"
+                                         lazy="true"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         reflow="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{currentPage} / {totalPages}"
+                                         rowsPerPageTemplate="5,10,20,50"
+                                         rowIndexVar="index">
+
+                                <p:column headerText="ردیف">
+                                    <h:outputText value="#{index + 1}"/>
+                                </p:column>
+
+                                <p:column headerText="توضیحات">
+                                    <h:outputText value="#{expense.description}"/>
+                                </p:column>
+
+                                <p:column headerText="مبلغ">
+                                    <h:outputText value="#{expense.amount}"/>
+                                </p:column>
+
+                            </p:dataTable>
                         </p:outputPanel>
+
                     </div>
                 </p:outputPanel>
             </div>
