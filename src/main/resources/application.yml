@@ -1,10 +1,11 @@
 server:
   port: 8080
 
+
 spring:
   datasource:
     username: root
-    password: chevroletnovaV8
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/expense_management?createDatabaseIfNotExist=true
     platform: mysql
@@ -18,3 +19,6 @@ spring:
         show_sql: true
         use_sql_comments: false
         format_sql: false
+
+# this config overrides spring.jpa.properties.hibernate.show_sql if is set to false
+#debug: true

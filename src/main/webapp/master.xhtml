@@ -14,21 +14,21 @@
     <p:growl id="msg" />
     <h:form>
         <div style="display: flex;justify-content: center">
-            <h2>سامانه مدیریت هزینه ها</h2>
+            <h2>#{message['expense.management.system']}</h2>
         </div>
 
         <p:menubar style="display: flex;justify-content: flex-end">
-            <p:submenu label="عملیات"
+            <p:submenu label="#{message['operation']}"
                        icon="pi pi-fw pi-file">
-                <p:menuitem value="خروج"
+                <p:menuitem value="#{message['exit']}"
                             icon="pi pi-fw pi-external-link"/>
             </p:submenu>
-            <p:menuitem value="مدیریت اقساط"
+            <p:menuitem value="#{message['installments']}"
                         icon="pi pi-fw pi-calendar"/>
-            <p:menuitem value="مدیریت هزینه ها"
+            <p:menuitem value="#{message['expenses']}"
                         icon="pi pi-fw pi-calendar"
                         action="expense.xhtml?faces-redirect=true"/>
-            <p:menuitem value="صفحه اصلی"
+            <p:menuitem value="#{message['main.page']}"
                         icon="pi pi-fw pi-calendar"
                         action="index.xhtml?faces-redirect=true"/>
 

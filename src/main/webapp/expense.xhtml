@@ -7,13 +7,11 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:head>
-    <f:metadata>
-        <f:event type="preRenderView" listener="#{expenseManagedBean.init}"/>
-    </f:metadata>
-</h:head>
-
 <h:body style="margin-left:50px">
+
+    <f:metadata>
+        <f:viewAction action="#{expenseManagedBean.init()}"/>
+    </f:metadata>
 
     <ui:composition template="master.xhtml">
         <ui:define name="master-frame">
@@ -24,28 +22,30 @@
                     <div class="contentContainer">
                         <p:outputPanel id="form-container">
                             <h:form id="add-expense-form"
-                                    title="افزودن هزینه">
-                                <div style="display: flex; justify-content: space-around">
+                                    title="#{message['add.expense']}">
+                                <div style="display: flex; justify-content: space-around; margin-bottom: 30px">
                                     <p:inputNumber
                                             id="amount"
-                                            placeholder="مبلغ را وارد کنید"
-                                            validatorMessage="مبلغ را وارد کنید"
+                                            placeholder="#{message['add.amount']}"
+                                            requiredMessage="#{message['add.amount']}"
                                             value="#{expenseManagedBean.expenseDTO.amount}"
                                             padControl="false"
                                             required="true"
                                             styleClass="ui-sm-4"/>
                                     <p:inputText
                                             id="description"
-                                            placeholder="توضیحات"
-                                            validatorMessage="توضیحات را وارد کنید"
+                                            placeholder="#{message['description']}"
+                                            requiredMessage="#{message['add.description']}"
                                             required="true"
                                             value="#{expenseManagedBean.expenseDTO.description}"
                                             styleClass="ui-sm-4"/>
                                     <p:selectOneMenu value="#{expenseManagedBean.expenseDTO.biType}"
                                                      multiple="false"
+                                                     required="true"
                                                      dir="rtl"
-                                                     validatorMessage="نوع هزینه را انتخاب کنید"
-                                                     label="نوع هزینه">
+                                                     requiredMessage="#{message['select.expense.type']}"
+                                                     label="#{message['expense.type']}">
+                                        <f:selectItem itemLabel="#{message['select']}"/>
                                         <f:selectItems value="#{expenseManagedBean.expenseTypesBiDtoList}"
                                                        var="type"
                                                        itemLabel="#{type.title}"
@@ -53,46 +53,60 @@
                                     </p:selectOneMenu>
 
                                     <p:calendar id="date"
-                                                placeholder="تاریخ پرداخت"
+                                                required="true"
+                                                requiredMessage="#{message['select.date']}"
+                                                placeholder="#{message['payment.date']}"
                                                 value="#{expenseManagedBean.expenseDTO.dateForPay}"
                                                 mode="popup"/>
                                 </div>
 
                                 <p:commandButton
+                                        style="margin: 10px"
                                         action="#{expenseManagedBean.save}"
-                                        update="msg, expenseDatatable"
-                                        value="ذخیره"/>
+                                        update="expenseDatatable , msg"
+                                        value="#{message['save']}">
+                                </p:commandButton>
 
                                 <p:commandButton
-                                        update=" expenseDatatable"
-                                        value="update table"/>
+                                        style="margin: 10px"
+                                        value="#{message['clear']}">
+                                    <p:ajax update="add-expense-form" resetValues="true" />
+                                </p:commandButton>
+
                             </h:form>
 
                             <p:dataTable dir="rtl"
-                                         emptyMessage="داده یافت نشد"
+                                         emptyMessage="#{message['data.not.found']}"
                                          id="expenseDatatable"
-                                         value="#{expenseManagedBean.expenseLazyDataModel}"
+                                         value="#{expenseManagedBean.expenseDTOList}"
                                          var="expense"
                                          rows="5"
                                          lazy="true"
                                          paginator="true"
                                          paginatorPosition="bottom"
-                                         reflow="true"
                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          currentPageReportTemplate="{currentPage} / {totalPages}"
                                          rowsPerPageTemplate="5,10,20,50"
                                          rowIndexVar="index">
 
-                                <p:column headerText="ردیف">
+                                <p:column headerText="#{message['row']}" width="30">
                                     <h:outputText value="#{index + 1}"/>
                                 </p:column>
 
-                                <p:column headerText="توضیحات">
+                                <p:column headerText="#{message['amount']}">
+                                    <h:outputText value="#{expense.amount}"/>
+                                </p:column>
+
+                                <p:column headerText="#{message['description']}">
                                     <h:outputText value="#{expense.description}"/>
                                 </p:column>
 
-                                <p:column headerText="مبلغ">
-                                    <h:outputText value="#{expense.amount}"/>
+                                <p:column headerText="#{message['expense.type']}">
+                                    <h:outputText value="#{expense.biTypeTitle}"/>
+                                </p:column>
+
+                                <p:column headerText="#{message['expense.date']}">
+                                    <h:outputText value="#{expense.dateForPay}"/>
                                 </p:column>
 
                             </p:dataTable>
