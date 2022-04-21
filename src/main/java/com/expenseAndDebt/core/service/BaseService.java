@@ -6,7 +6,7 @@ import com.expenseAndDebt.core.repository.BaseRepository;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-public class BaseService<E extends BaseEntity> implements IBaseService<E>{
+public class BaseService<E extends BaseEntity> implements IBaseService<E> {
 
     protected final BaseRepository<E> baseRepository;
 
@@ -44,4 +44,10 @@ public class BaseService<E extends BaseEntity> implements IBaseService<E>{
     public List<E> findAll(List<Long> ids) {
         return baseRepository.findAllById(ids);
     }
+
+    @Override
+    public List<E> findAll() {
+        return baseRepository.findAll();
+    }
+
 }

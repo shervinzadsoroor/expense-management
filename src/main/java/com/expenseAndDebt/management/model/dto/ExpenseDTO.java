@@ -18,6 +18,7 @@ public class ExpenseDTO extends BaseDTO {
     private String description;
     private Long amount;
     private Long biType;
+    private String biTypeTitle;
     private Boolean isPaid;
     private Date dateForPay;
 }

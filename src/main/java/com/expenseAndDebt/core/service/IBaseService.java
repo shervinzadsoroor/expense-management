@@ -1,6 +1,5 @@
 package com.expenseAndDebt.core.service;
 
-import com.expenseAndDebt.core.model.BaseDTO;
 import com.expenseAndDebt.core.model.BaseEntity;
 
 import java.util.List;
@@ -17,4 +16,6 @@ public interface IBaseService<E extends BaseEntity> {
     E findById(Long id);
 
     List<E> findAll(List<Long> ids);
+
+    List<E> findAll();
 }

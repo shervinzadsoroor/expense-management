@@ -5,6 +5,7 @@ import com.expenseAndDebt.core.managedbean.BaseManagedBean;
 import com.expenseAndDebt.core.model.BaseInfoValueDTO;
 import com.expenseAndDebt.core.service.IBaseInfoValueService;
 import com.expenseAndDebt.management.lazydatamodel.ExpenseLazyDataModel;
+import com.expenseAndDebt.management.model.domainmodel.Expense;
 import com.expenseAndDebt.management.model.dto.ExpenseDTO;
 import com.expenseAndDebt.management.service.IExpenseService;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @ManagedBean
@@ -23,7 +25,13 @@ public class ExpenseManagedBean extends BaseManagedBean {
     @Setter @Getter
     private ExpenseDTO expenseDTO;
 
-    @Getter
+    @Setter @Getter
+    private ExpenseDTO searchDto;
+
+    @Setter @Getter
+    private List<ExpenseDTO> expenseDTOList;
+
+    @Getter @Setter
     private ExpenseLazyDataModel expenseLazyDataModel;
 
     @Getter
@@ -38,20 +46,25 @@ public class ExpenseManagedBean extends BaseManagedBean {
         this.iExpenseService = iExpenseService;
     }
 
-    public void init() {
+    public void init() throws Exception {
         expenseDTO = new ExpenseDTO();
-        expenseLazyDataModel = new ExpenseLazyDataModel(iExpenseService);
+        getAllExpenses();
+        expenseLazyDataModel = new ExpenseLazyDataModel(iExpenseService, searchDto);
         expenseTypesBiDtoList = iBaseInfoValueService.getAllByBaseInfoGroup(EN_BaseInfoGroup.EXPENSE.getId());
     }
 
     public void save() {
         try {
             iExpenseService.saveByDto(expenseDTO);
+            getAllExpenses();
             showInfo("ثبت با موفقیت انجام شد", null);
         } catch (Exception e) {
             e.printStackTrace();
             showError("ثبت انجام نشد!" , null);
         }
+    }
 
+    public void getAllExpenses() throws Exception {
+        this.expenseDTOList = iExpenseService.getAllMappedList();
     }
 }
